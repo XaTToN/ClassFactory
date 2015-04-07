@@ -19,9 +19,9 @@
 #ifndef __LIB_CLASS_FACTORY_H__
 #define __LIB_CLASS_FACTORY_H__
 
-#include "ClassAllocator.h"
-#include "Registration.h"
-#include "ClassFactory.h"
+#include "detail/ClassAllocator.h"
+#include "detail/Registration.h"
+#include "detail/ClassFactory.h"
 
 #define sClassFactory singleton_default<ClassFactory>::instance()
 
