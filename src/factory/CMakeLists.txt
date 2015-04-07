@@ -15,5 +15,4 @@ set_target_properties(ClassFactory PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_B
 
 target_include_directories(ClassFactory PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}/detail
 )
