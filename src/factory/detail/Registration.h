@@ -21,11 +21,13 @@
 
 #include "ClassFactory.h"
 
+#include <string>
+
 template <class Super, class Sub>
 class Registration
 {
 public:
-	Registration(const char* name)
+	Registration(const std::string& name)
 	{
 		singleton_default<ClassFactory>::instance()->Register<Super>(name, []() -> Super*
 		{
