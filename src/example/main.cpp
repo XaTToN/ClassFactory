@@ -74,7 +74,7 @@ int main()
 		}
 		catch (...)
 		{
-			std::cout << "An error occured!" << std::endl;
+			std::cout << "An error occurred!" << std::endl;
 		}
 
 		std::cout << "Create another class? (y/n): ";
