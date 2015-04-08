@@ -16,10 +16,25 @@
 * with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ClassFactory.h"
+#ifndef __LCF_H__
+#define __LCF_H__
 
-ClassFactory::~ClassFactory()
-{
-	for (std::map<std::string, ClassAllocatorBase*>::iterator it = this->registry.begin(); it != this->registry.end(); ++it)
-		delete it->second;
-}
+#include <ClassFactory/detail/ClassAllocator.h>
+#include <ClassFactory/detail/Registration.h>
+#include <ClassFactory/detail/ClassFactory.h>
+
+#define sClassFactory singleton_default<ClassFactory>::instance()
+
+#define FACTORY_REGISTER_SUPER_CLASS(SUPER) \
+	static Registration<SUPER, SUPER> reg;
+
+#define FACTORY_FINISH_SUPER_REGISTRATION(SUPER, NAME) \
+	Registration<SUPER, SUPER> SUPER::reg(NAME);
+
+#define FACTORY_REGISTER_DERIVATED_CLASS(SUPER, SUB) \
+	static Registration<SUPER, SUB> reg;
+
+#define FACTORY_FINISH_DERIVATED_REGISTRATION(SUPER, SUB, NAME) \
+	Registration<SUPER, SUB> SUB::reg(NAME);
+
+#endif //__LCF_H__

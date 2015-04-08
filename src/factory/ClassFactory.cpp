@@ -16,24 +16,10 @@
 * with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __REGISTRATION_H__
-#define __REGISTRATION_H__
+#include <ClassFactory\detail\ClassFactory.h>
 
-#include "ClassFactory.h"
-
-#include <string>
-
-template <class Super, class Sub>
-class Registration
+ClassFactory::~ClassFactory()
 {
-public:
-	Registration(const std::string& name)
-	{
-		singleton_default<ClassFactory>::instance()->Register<Super>(name, []() -> Super*
-		{
-			return new Sub();
-		});
-	}
-};
-
-#endif //__REGISTRATION_H__
+	for (std::map<std::string, ClassAllocatorBase*>::iterator it = this->registry.begin(); it != this->registry.end(); ++it)
+		delete it->second;
+}

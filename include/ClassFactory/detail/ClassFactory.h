@@ -19,8 +19,8 @@
 #ifndef __CLASS_FACTORY_H__
 #define __CLASS_FACTORY_H__
 
-#include "Singleton.h"
-#include "ClassAllocator.h"
+#include <ClassFactory/detail/Singleton.h>
+#include <ClassFactory/detail/ClassAllocator.h>
 
 #include <memory>
 #include <string>

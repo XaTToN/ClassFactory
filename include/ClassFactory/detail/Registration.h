@@ -16,25 +16,24 @@
 * with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __LIB_CLASS_FACTORY_H__
-#define __LIB_CLASS_FACTORY_H__
+#ifndef __REGISTRATION_H__
+#define __REGISTRATION_H__
 
-#include "detail/ClassAllocator.h"
-#include "detail/Registration.h"
-#include "detail/ClassFactory.h"
+#include <ClassFactory/detail/ClassFactory.h>
 
-#define sClassFactory singleton_default<ClassFactory>::instance()
+#include <string>
 
-#define FACTORY_REGISTER_SUPER_CLASS(SUPER) \
-	static Registration<SUPER, SUPER> reg;
+template <class Super, class Sub>
+class Registration
+{
+public:
+	Registration(const std::string& name)
+	{
+		singleton_default<ClassFactory>::instance()->Register<Super>(name, []() -> Super*
+		{
+			return new Sub();
+		});
+	}
+};
 
-#define FACTORY_FINISH_SUPER_REGISTRATION(SUPER, NAME) \
-	Registration<SUPER, SUPER> SUPER::reg(NAME);
-
-#define FACTORY_REGISTER_DERIVATED_CLASS(SUPER, SUB) \
-	static Registration<SUPER, SUB> reg;
-
-#define FACTORY_FINISH_DERIVATED_REGISTRATION(SUPER, SUB, NAME) \
-	Registration<SUPER, SUB> SUB::reg(NAME);
-
-#endif //_LIB_CLASS_FACTORY_H__
+#endif //__REGISTRATION_H__

@@ -19,7 +19,7 @@
 #include <iostream>
 #include <string>
 
-#include "libClassFactory.h"
+#include <ClassFactory/LCF.h>
 
 class Super
 {
