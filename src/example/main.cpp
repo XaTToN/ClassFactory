@@ -67,7 +67,7 @@ int main()
 		std::cout << "Name of class to create: ";
 		std::cin >> name;
 
-		auto ptr = sClassFactory->Alloc<DBad>(name);
+		auto ptr = sClassFactory->Alloc<Super>(name);
 
 		if (ptr)
 			ptr->print();
