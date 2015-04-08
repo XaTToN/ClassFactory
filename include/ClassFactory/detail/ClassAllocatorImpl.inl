@@ -16,12 +16,14 @@
 * with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <exception>
+
 template<class T> const std::function<T*(void)>& ClassAllocatorBase::get() const
 {
 	auto dptr = dynamic_cast<const ClassAllocator<T>*>(this);
 	if (!dptr)
 	{
-		return static_cast<const std::function<T*(void)>&>(nullptr); //small hack in order to return an "emtpy" function to trigger the if-statement in the Alloc-Method
+		throw std::bad_cast();
 	}
 
 	return dynamic_cast<const ClassAllocator<T>&>(*this).get();

@@ -31,10 +31,18 @@ template <class T> std::unique_ptr<T> ClassFactory::Alloc(const std::string& cla
 	std::map<std::string, ClassAllocatorBase*>::iterator it = this->registry.find(class_name);
 
 	if (it == this->registry.end())
-		throw std::bad_alloc();
+	{
+		return nullptr;
+	}
 
-	if (!it->second->get<T>())
-		throw std::bad_cast();
+	try
+	{
+		it->second->get<T>();
+	}
+	catch (...)
+	{
+		return nullptr;
+	}
 
 	return std::unique_ptr<T>(it->second->get<T>()());
 }

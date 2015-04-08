@@ -67,15 +67,12 @@ int main()
 		std::cout << "Name of class to create: ";
 		std::cin >> name;
 
-		try
-		{
-			auto ptr = sClassFactory->Alloc<Super>(name);
+		auto ptr = sClassFactory->Alloc<DBad>(name);
+
+		if (ptr)
 			ptr->print();
-		}
-		catch (...)
-		{
+		else
 			std::cout << "An error occurred!" << std::endl;
-		}
 
 		std::cout << "Create another class? (y/n): ";
 		std::cin >> c;

@@ -25,7 +25,6 @@
 #include <memory>
 #include <string>
 #include <map>
-#include <exception>
 
 /*! Interface for the factory wrapped as a singleton*/
 class ClassFactory
