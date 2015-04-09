@@ -18,7 +18,7 @@
 
 template <class T> void ClassFactory::Register(const std::string& class_name, const std::function<T*(void)>& proc)
 {
-	int oldsize = this->registry.size();
+	unsigned int oldsize = this->registry.size();
 	ClassAllocator<T>* alloc = new ClassAllocator<T>(proc);
 	this->registry.insert(std::pair<std::string, ClassAllocatorBase*>(class_name, alloc));
 
