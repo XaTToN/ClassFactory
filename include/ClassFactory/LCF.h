@@ -19,7 +19,6 @@
 #ifndef __LCF_H__
 #define __LCF_H__
 
-#include <ClassFactory/detail/ClassAllocator.h>
 #include <ClassFactory/detail/Registration.h>
 #include <ClassFactory/detail/ClassFactory.h>
 
