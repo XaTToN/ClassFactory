@@ -30,10 +30,10 @@
 #define FACTORY_FINISH_SUPER_REGISTRATION(SUPER, NAME) \
 	Registration<SUPER, SUPER> SUPER::reg(NAME);
 
-#define FACTORY_REGISTER_DERIVATED_CLASS(SUPER, SUB) \
-	static Registration<SUPER, SUB> reg;
+#define FACTORY_REGISTER_DERIVATED_CLASS(SUB) \
+	static Registration<SUB::Super, SUB> reg;
 
-#define FACTORY_FINISH_DERIVATED_REGISTRATION(SUPER, SUB, NAME) \
-	Registration<SUPER, SUB> SUB::reg(NAME);
+#define FACTORY_FINISH_DERIVATED_REGISTRATION(SUB, NAME) \
+	Registration<SUB::Super, SUB> SUB::reg(NAME);
 
 #endif //__LCF_H__

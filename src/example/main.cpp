@@ -21,42 +21,35 @@
 
 #include <ClassFactory/LCF.h>
 
-class Super
+class SuperClass
 {
-	FACTORY_REGISTER_SUPER_CLASS(Super)
+FACTORY_REGISTER_SUPER_CLASS(SuperClass)
+protected:
+	typedef SuperClass Super;
 public:
-	virtual ~Super() {}
-	virtual void print() { std::cout << "I am the super class" << std::endl; }
+	virtual ~SuperClass() {}
+	virtual void print() { std::cout << "I am the SuperClass class" << std::endl; }
 };
-FACTORY_FINISH_SUPER_REGISTRATION(Super, "Super")
+FACTORY_FINISH_SUPER_REGISTRATION(SuperClass, "SuperClass")
 
-class DOne : public Super
+class DOne : public SuperClass
 {
-	FACTORY_REGISTER_DERIVATED_CLASS(Super, DOne)
+	FACTORY_REGISTER_DERIVATED_CLASS(DOne)
 public:
 	virtual ~DOne() {}
 	virtual void print() { std::cout << "I am class DOne" << std::endl; }
 };
-FACTORY_FINISH_DERIVATED_REGISTRATION(Super, DOne, "DOne")
+FACTORY_FINISH_DERIVATED_REGISTRATION(DOne, "DOne")
 
-class DTwo : public Super
+class DTwo : public SuperClass
 {
-	FACTORY_REGISTER_DERIVATED_CLASS(Super, DTwo)
+	FACTORY_REGISTER_DERIVATED_CLASS(DTwo)
 public:
 	virtual ~DTwo() {}
 	virtual void print() { std::cout << "I am class DTwo" << std::endl; }
 };
-FACTORY_FINISH_DERIVATED_REGISTRATION(Super, DTwo, "DTwo")
+FACTORY_FINISH_DERIVATED_REGISTRATION(DTwo, "DTwo")
 
-class DBad : public Super
-{
-	FACTORY_REGISTER_DERIVATED_CLASS(DBad, DBad)
-public:
-	virtual ~DBad() {}
-	virtual void print() { std::cout << "I am class DBad" << std::endl; }
-};
-FACTORY_FINISH_DERIVATED_REGISTRATION(DBad, DBad, "DBad")
- 
 int main()
 {
 	char c = 'n';
@@ -67,7 +60,7 @@ int main()
 		std::cout << "Name of class to create: ";
 		std::cin >> name;
 
-		auto ptr = sClassFactory->Alloc<Super>(name);
+		auto ptr = sClassFactory->Alloc<SuperClass>(name);
 
 		if (ptr)
 			ptr->print();
