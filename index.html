@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Classfactory</title>
+  <meta name="description" content="Create class objects by names">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Classfactory</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Create class objects by names</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/XaTToN/ClassFactory/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/XaTToN/ClassFactory/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/XaTToN/ClassFactory" class="code">View Classfactory on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a id="classfactory" class="anchor" href="#classfactory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ClassFactory</h1>
+
+<ol>
+<li>About</li>
+<li>Requirements</li>
+<li>Instructions</li>
+<li>Usage</li>
+</ol>
+
+<h2>
+<a id="1-about" class="anchor" href="#1-about" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. About</h2>
+
+<p>This library provides an easy to use interface in order to create class objects during runtime by simply passing a string which is assigned as a classname beforehand.<br>
+Now you may ask yourself how this could come in handy. Well, here are some reasons to use this library:  </p>
+
+<ul>
+<li>You can pass requested objects from external resources (files, databases, ...) directly to an interface which will build the objects, no need for bloating your code with <code>if/else</code> statements</li>
+<li>Using this library is ridiculously easy. You need a total of <code>2</code> lines of code to add classes to the factory and <code>1</code> line is enough to construct objects from it.</li>
+<li>The library does not have any dependencies. Your compiler only has to support C++11</li>
+<li>Since you are using C++ you are obviously the master race in terms of programming languages. You are laughing about these dirty peasents which are using languages like Java. But then you realize, these dirty peasents have class reflection to work with and you don't. Well, this library does not add it to C++, but at least it enables you to create objects by their class names, which is a cool part of the class reflection</li>
+</ul>
+
+<h2>
+<a id="2-requirements" class="anchor" href="#2-requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Requirements</h2>
+
+<ul>
+<li>C++11 compatible compiler</li>
+<li>CMake with version ≥ 2.8.12</li>
+</ul>
+
+<h2>
+<a id="3-instructions" class="anchor" href="#3-instructions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Instructions</h2>
+
+<ul>
+<li>Download the source (via zip or by cloning this repo)</li>
+<li>Create a directory in which the build-files will be placed</li>
+<li>Run CMake for a compiler of your choice. If you wish you can enable the compilation of the example-project</li>
+<li>Compile with your chosen compiler</li>
+<li>The static library (and the example if enabled) will be placed under <code>YOUR_BUILD_DIR/bin/</code>
+</li>
+<li>To use the library in your projects, link against this library and add <code>LIBRARY_SOURCE_DIR/include/</code> to your include path or add the header files directly to your project</li>
+</ul>
+
+<h2>
+<a id="4-usage" class="anchor" href="#4-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Usage</h2>
+
+<p>Everything you need you will find in the header file <code>LCF.h</code><br>
+If you want to build an object of a simple single class (e.g. Superclass), you have to use following definitions:<br>
+<code>FACTORY_REGISTER_SUPER_CLASS(Super)</code> inside your class and<br>
+<code>FACTORY_FINISH_SUPER_REGISTRATION(Super, Name)</code> outside of your class<br>
+If you have a bit more complex class-hierarchy (using derivations), you have to add a typedef inside your superclass:<br>
+<code>typdef MySuperClass Super;</code> is what you need to add (in the protected scope of the class) in order to ensure that following definitions will work properly:<br>
+<code>FACTORY_REGISTER_DERIVATED_CLASS(Derivated)</code> inside of your derivated class<br>
+<code>FACTORY_FINISH_DERIVATED_REGISTRATION(Derivated, Name)</code> outside of your derivated class<br>
+From now on, you can build your specified classes with calling <code>sClassFactory-&gt;Alloc&lt;Super&gt;(Name);</code><br>
+This will return an <code>std::unique_ptr&lt;Super&gt;</code> which points to the object specified by <code>Name</code><br>
+<strong>Objects of derivated classes will be casted to their respective superclasses!</strong></p>
+
+<p>Some Notes:  </p>
+
+<ul>
+<li>
+<code>Name</code> (above) means nothing else than a string with which you can access your registrated classes</li>
+<li>The registrations are <strong>not</strong> mutually exclusive, means you can register both Super and Derivated-Class(es)</li>
+<li>An empty pointer is returned if you:
+
+<ul>
+<li>Allocated a class object with an unknown name or which is not registered</li>
+<li>Allocated a class object and requesting T as superclass when in reality the superclass of the target object is U</li>
+</ul>
+</li>
+<li>So to make sure that you pointer is valid, just quickly check it with <code>if(your_pointer)</code>
+</li>
+<li>Make sure that you don't register an abstract class (a class which does not implement at least one pure virtual function), else you would imply that this class can be instantiated which is, of course, not true and will result in an error during compiling</li>
+<li>You can find an <a href="https://github.com/XaTToN/ClassFactory/blob/master/src/example/main.cpp">example in the source</a>
+</li>
+</ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/XaTToN" class="avatar"><img src="https://avatars2.githubusercontent.com/u/1334225?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/XaTToN">XaTToN</a> maintains <a href="https://github.com/XaTToN/ClassFactory">Classfactory</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/XaTToN/ClassFactory/tarball/master" class="tar">tar</a><a href="https://github.com/XaTToN/ClassFactory/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
